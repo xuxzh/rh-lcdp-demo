@@ -1,0 +1,58 @@
+<div nz-row nzGutter="24" class="ant-row py-lg" style="margin-left: 12px; margin-right: -12px">
+  <!-- 左侧显示 -->
+
+  <div nz-col nzGutter="24" nzlg="7" class="ant-col ant-col-md-24 ant-col-lg-7" style="padding-left: 12px; padding-right: -12px">
+    <nz-card class="ant-card mb-lg">
+      <div class="ant-card-body">
+        <div class="avatar-holder ng-star-inserted">
+          <img
+            src="{{
+              currentUser.EmployeePhoto ? currentUser.EmployeePhoto : 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
+            }}"
+          />
+          <div class="name">
+            {{ currentUser.EmployeeName ? currentUser.EmployeeName : currentUser.Name }}&nbsp;
+            <a title="男" style="color: #2863bb; font-size: 16px"
+              ><i *ngIf="currentUser.Gender === 'male'" nz-icon nzType="man" nzTheme="outline"></i
+            ></a>
+            <a title="女" style="color: #f13092; font-size: 16px"
+              ><i *ngIf="currentUser.Gender === 'female'" nz-icon nzType="woman" nzTheme="outline"></i>
+            </a>
+          </div>
+          <div>{{ currentUser.UserName ? currentUser.UserName : currentUser.UserName }}</div>
+        </div>
+        <div class="detail ng-star-inserted">
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <p>
+                <i nz-icon nzType="solution" nzTheme="outline"></i>状态：{{
+                  currentUser.EmployeeStatus === 'OnTheJob' ? '在职' : currentUser.EmployeeStatus === 'Departure' ? '离职' : ''
+                }}
+              </p>
+              <p><i nz-icon nzType="apartment" nzTheme="outline"></i>部门：{{ currentUser?.FullOrganizationStructureName }}</p>
+              <p><i nz-icon nzType="mobile" nzTheme="outline"></i>联系方式：{{ currentUser?.PhoneNumber }}</p>
+            </div>
+
+            <div nz-col nzSpan="12">
+              <p><i nz-icon nzType="environment" nzTheme="outline"></i>公司：{{ currentUser?.FactoryName }}</p>
+              <p><i nz-icon nzType="idcard" nzTheme="outline"></i>岗位：{{ currentUser?.PostName }}</p>
+              <p><i nz-icon nzType="mail" nzTheme="outline"></i>邮箱：{{ currentUser?.EmailAddress }}</p>
+            </div>
+          </div>
+        </div>
+        <nz-divider nzdashed="" class="ant-divider ant-divider-horizontal ant-divider-dashed ng-star-inserted"> </nz-divider>
+        <div class="tags ng-star-inserted">
+          <div class="tags-title">标签</div>
+          <!-- 班次 -->
+          <nz-tag *ngIf="currentUser.ClassTypeName" class="ant-tag ng-star-inserted">
+            {{ currentUser?.ClassTypeName }}
+          </nz-tag>
+          <nz-tag *ngIf="currentUser.EmployeeType" class="ant-tag ng-star-inserted">
+            {{ currentUser.EmployeeType === 'Offical' ? '正式工' : currentUser.EmployeeType === 'Temporary' ? '临时工' : '' }}
+          </nz-tag>
+        </div>
+        <nz-divider nzdashed="" class="ant-divider ant-divider-horizontal ant-divider-dashed ng-star-inserted"> </nz-divider>
+      </div>
+    </nz-card>
+  </div>
+</div>

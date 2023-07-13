@@ -1,0 +1,14 @@
+<!-- <div nz-dropdown [nzDropdownMenu]="tradeMenu" nzTrigger="click">
+  {{tradeDataset[0]}}
+  <i nz-icon nzType='caret-down' nzTheme='outline'></i>
+</div> -->
+<nz-dropdown-menu #tradeMenu='nzDropdownMenu'>
+  <div nz-menu>
+    <ng-container *ngFor="let item of tradeDataset">
+      <div nz-menu-item>
+        {{item}}
+      </div>
+      <li nz-menu-divider></li>
+    </ng-container>
+  </div>
+</nz-dropdown-menu>

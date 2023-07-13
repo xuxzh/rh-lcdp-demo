@@ -1,0 +1,77 @@
+<form nz-form [formGroup]="updatePasswordForm" (ngSubmit)="submitUpdatePasswordForm($event)" nzLayout="horizontal">
+  <nz-form-item nzFlex nzJustify="space-around">
+    <nz-form-label nzSpan="6" nzFor="Password" nzRequired>用户密码</nz-form-label>
+    <nz-form-control
+      nzSpan="14"
+      [nzValidateStatus]="isCorrectPwd || isCorrectPwd === null ? 'success' : 'error'"
+      [nzErrorTip]="oldPwdErrorTpl"
+    >
+      <nz-input-group [nzSuffix]="oldpwdTemplate" [nzAddOnAfter]="checkIcon" nzSearch>
+        <input
+          [type]="oldpasswordVisible ? 'text' : 'password'"
+          nz-input
+          formControlName="Password"
+          placeholder="请输入原密码并点击核验按钮"
+        />
+      </nz-input-group>
+      <ng-template #oldpwdTemplate>
+        <i nz-icon [nzType]="oldpasswordVisible ? 'eye-invisible' : 'eye'" (click)="oldpasswordVisible = !oldpasswordVisible"></i>
+      </ng-template>
+      <ng-template #checkIcon>
+        <i nz-icon nzType="key" nzTheme="outline" style="cursor: pointer" (click)="checkUserPassword()" title="核验密码"></i>
+      </ng-template>
+      <ng-template #oldPwdErrorTpl>
+        <span>请输入原密码</span>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nzFlex nzJustify="space-around">
+    <nz-form-label nzSpan="6" nzFor="NewPassword" nzRequired>用户新密码</nz-form-label>
+    <nz-form-control nzSpan="14" nzHasFeedback nzErrorTip="用户新密码不能为空">
+      <nz-input-group [nzSuffix]="newpwdTemplate">
+        <input [type]="newpasswordVisible ? 'text' : 'password'" nz-input formControlName="NewPassword" placeholder="用户新密码" />
+      </nz-input-group>
+      <ng-template #newpwdTemplate>
+        <i nz-icon [nzType]="newpasswordVisible ? 'eye-invisible' : 'eye'" (click)="newpasswordVisible = !newpasswordVisible"></i>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nzFlex nzJustify="space-around">
+    <nz-form-label nzSpan="6" nzFor="NewPassword2" nzRequired>重复新密码</nz-form-label>
+    <nz-form-control nzSpan="14" [nzErrorTip]="passwordErrorTpl">
+      <nz-input-group [nzSuffix]="newpwdTemplate2">
+        <input [type]="newpasswordVisible2 ? 'text' : 'password'" nz-input formControlName="NewPassword2" placeholder="重复新密码" />
+      </nz-input-group>
+      <ng-template #newpwdTemplate2>
+        <i nz-icon [nzType]="newpasswordVisible2 ? 'eye-invisible' : 'eye'" (click)="newpasswordVisible2 = !newpasswordVisible2"></i>
+      </ng-template>
+      <ng-template #passwordErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')"> 重复新密码不能为空 </ng-container>
+        <ng-container *ngIf="control.hasError('confirm')"> 重复新密码不正确 </ng-container>
+      </ng-template>
+      <!-- <nz-form-explain
+        *ngIf="updatePasswordForm.get('NewPassword2').dirty && updatePasswordForm.get('NewPassword2').errors">
+        重复新密码不能为空</nz-form-explain> -->
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nzFlex nzJustify="space-around">
+    <nz-form-control nzOffset="6">
+      <button
+        nz-button
+        nzType="primary"
+        type="submit"
+        [nzLoading]="updateLoading"
+        style="margin-right: 8px"
+        [disabled]="!updatePasswordForm.valid || !this.isCorrectPwd"
+      >
+        <i nz-icon nzType="save" nzTheme="outline"></i>确定
+      </button>
+      <button nz-button nzType="primary" nzDanger type="button" (click)="resetUpdatePasswordForm($event)">
+        <i nz-icon nzType="redo" nzTheme="outline"></i>清空
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

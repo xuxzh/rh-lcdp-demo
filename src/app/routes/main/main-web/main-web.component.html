@@ -1,0 +1,155 @@
+<nz-layout class="rh-full">
+  <nz-header>
+    <div class="header">
+      <!-- 平台名称 -->
+      <div class="company-info" [class.collapse]="isCollapsed">
+        <div>
+          <a href="http://www.cptgroup.cn/" target="_blank">
+            <img class="logo" [src]="imageSrc" />
+          </a>
+        </div>
+        <div>
+          <span *ngIf="!isCollapsed" class="logo-title">智能化设备平台</span>
+        </div>
+      </div>
+      <!-- toggle按钮 -->
+      <div class="toggle-button">
+        <a class="menu-title" (click)="toggleCollapse()">
+          <i style="font-size: 2 rem" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" nzTheme="outline"></i>
+        </a>
+      </div>
+      <!-- 主菜单区域 -->
+      <div *ngIf="menuMode === 'MainChild'" class="header-menu">
+        <div
+          class="menu-item"
+          *ngFor="let item of mainMenuDataset"
+          class="menu-item"
+          [class.select]="item.select"
+          (click)="onSelectMainMenu(item)"
+        >
+          {{ item.DisplayName }}
+        </div>
+      </div>
+
+      <!-- 功能区域 -->
+      <div class="placeholder-div">
+        <div *ngIf="currentUserFactory" style="font-size: 1.2rem; color: #06d289">
+          <span>{{ currentUserFactory.FactoryName }}({{ currentUserFactory.FactoryCode }})</span>
+        </div>
+        <div class="header-item">
+          <rh-fullscreen></rh-fullscreen>
+        </div>
+        <div *ngIf="projectConfig?.EnableThemeSelect" class="header-item">
+          <rh-theme-button></rh-theme-button>
+        </div>
+        <div *ngIf="projectConfig?.IsLockScreen" class="header-item">
+          <rh-header-lock></rh-header-lock>
+        </div>
+        <div class="header-item">
+          <rh-developer-debug [style.display]="isDebug ? '' : 'none'"></rh-developer-debug>
+        </div>
+        <div class="header-item">
+          <a style="color: white" (click)="switchProdEnv()"><i nz-icon nzType="link"></i></a>
+        </div>
+        <div class="header-item" *ngIf="projectConfig.VersionSetting">
+          <rh-version rhSize="default"></rh-version>
+        </div>
+        <!-- 用户信息 -->
+        <div class="user">
+          <app-header-user [rhCurrentUserFactory]="currentUserFactory" (rhUserChange)="getUserChange($event)"> </app-header-user>
+        </div>
+      </div>
+    </div>
+  </nz-header>
+  <nz-layout>
+    <nz-sider class="sider" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+      <!-- sider菜单 -->
+      <nz-spin [nzSpinning]="menuLoading" nzTip="菜单加载中...">
+        <ul nz-menu nzMode="inline" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: childMenuDataset }"></ng-container>
+          <ng-template #menuTpl let-menuDataset>
+            <ng-container *ngFor="let menu of menuDataset">
+              <li
+                class="side-menu-item"
+                *ngIf="!menu.children"
+                nz-menu-item
+                [nzPaddingLeft]="menu.level * 12"
+                [nzDisabled]="menu.disabled"
+                [nzSelected]="menu.selected"
+                [title]="menu.title"
+              >
+                <a (click)="navigateToUrl(menu)">
+                  <i nz-icon [nzType]="menu.icon" *ngIf="menu.icon"></i>
+                  <span [style.color]="menuMapped && menuMapped[menu.route] ? '#1890ff' : ''">{{ menu.title }}</span>
+                </a>
+              </li>
+              <li
+                class="side-menu-item"
+                *ngIf="menu.children"
+                nz-submenu
+                [nzPaddingLeft]="menu.level * 12"
+                [(nzOpen)]="menu.open"
+                (nzOpenChange)="submenuOpenChange(menu)"
+                [nzTitle]="menu.title"
+                [nzIcon]="menu.icon"
+                [nzDisabled]="menu.disabled"
+                [title]="menu.title"
+              >
+                <ul>
+                  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
+                </ul>
+              </li>
+            </ng-container>
+          </ng-template>
+        </ul>
+      </nz-spin>
+    </nz-sider>
+    <nz-layout>
+      <nz-content>
+        <div class="rh-full content-area rh-{{ theme }}-color">
+          <!-- tab标题列表 -->
+          <div class="reusetab-nav overflow-show-ellipsis" [ngClass]="reuseTabNavCollapsClass">
+            <div
+              class="reuseTab-col"
+              *ngFor="let node of routeList; let index = index"
+              (click)="onClickTab($event, node)"
+              [class.active]="node.isSelect"
+              (contextmenu)="tabContextMenu($event, menu)"
+            >
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu>
+                  <li *ngIf="node.title !== '主页'" nz-menu-item (click)="closeCurrentTab(node)">关闭当前</li>
+                  <li nz-menu-item (click)="closeOtherTabs(node)">关闭其他</li>
+                  <li nz-menu-item (click)="closeAllTabs()">关闭所有</li>
+                </ul>
+              </nz-dropdown-menu>
+
+              <ng-container *ngIf="node.title === '主页'">
+                <span><i nz-icon nzType="home" theme="twotone"></i></span>
+              </ng-container>
+              <ng-container *ngIf="node.title !== '主页'">
+                <span class="overflow-show-ellipsis">
+                  {{ node.title }}
+                  <span class="rh-color-danger tab-close-button">
+                    <i style="color: red" nz-icon nzType="close-circle" nzTheme="fill" (click)="closeUrl(node.module, node.isSelect)"></i>
+                  </span>
+                </span>
+              </ng-container>
+            </div>
+          </div>
+          <!-- 内容区域 添加loading效果-->
+          <div class="rh-full router-outlet">
+            <nz-spin class="rh-full" [nzSpinning]="componentSpinning" nzTip="加载中..." nzSize="large">
+              <router-outlet></router-outlet>
+            </nz-spin>
+          </div>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
+
+<!-- 版本信息展示 -->
+<div class="verison-info">
+  <app-package-version (click)="triggerDebug()"></app-package-version>
+</div>

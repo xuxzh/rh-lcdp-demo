@@ -1,0 +1,61 @@
+<div class="user-btn" nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="userMenu" nzTrigger="click">
+  <nz-avatar nzIcon="user" [nzSize]="32" class="avatar"></nz-avatar>
+  {{ user.UserName }}
+</div>
+<nz-dropdown-menu #userMenu="nzDropdownMenu">
+  <div nz-menu class="width-sm">
+    <div nz-menu-item routerLink="/pro/account/center" (click)="openUserInformationModal()">
+      <i nz-icon nzType="user"></i>
+      个人资料
+    </div>
+    <div nz-menu-item routerLink="/pro/account/settings" (click)="openPasswdModal()">
+      <i nz-icon nzType="setting"></i>
+      修改密码
+    </div>
+    <div nz-menu-item (click)="onClickRefreshButton()">
+      <i nz-icon nzType="sync"></i>
+      刷新页面
+    </div>
+    <!-- <div nz-menu-item (click)="OnekeyLockScreen()">
+      <i nz-icon nzType="lock"></i>
+      一键锁屏
+    </div> -->
+    <li nz-menu-divider></li>
+    <div nz-menu-item (click)="logout()">
+      <i nz-icon nzType="logout"></i>
+      退出系统
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<!-- 密码修改对话框 -->
+
+<nz-modal
+  [nzVisible]="isShowPasswd"
+  [nzTitle]="ChangePwdTpl"
+  [nzOkText]="null"
+  [nzCancelText]="null"
+  nzMaskClosable="false"
+  (nzOnCancel)="closePassedModal()"
+  [nzWidth]="560"
+>
+  <ng-template #ChangePwdTpl> 修改密码(当前修改:{{ user.UserName }}) </ng-template>
+  <ng-container *nzModalContent>
+    <app-change-passwd *ngIf="isShowPasswd" (rhClose)="closePassedModal()"></app-change-passwd>
+  </ng-container>
+</nz-modal>
+
+<!-- 个人资料对话框 -->
+<nz-modal
+  [nzVisible]="isShowUserInformationModal"
+  nzTitle="个人资料"
+  [nzOkText]="null"
+  [nzCancelText]="null"
+  nzMaskClosable="false"
+  (nzOnCancel)="closeUserInformationModal()"
+  [nzWidth]="560"
+>
+  <ng-container *nzModalContent>
+    <app-user-information *ngIf="isShowUserInformationModal"></app-user-information>
+  </ng-container>
+</nz-modal>

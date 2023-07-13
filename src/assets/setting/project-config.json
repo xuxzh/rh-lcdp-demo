@@ -1,0 +1,42 @@
+{
+  "AuthoriytUser": "AuthenUser",
+  "DefaultIcon": "bars",
+  "EnableMenuGuard": false,
+  "MenuMode": "Normal",
+  "MenuRouteLevel_Normal": 1,
+  "MainPath": "/main",
+  "MainPagePath": "/DefaultPage",
+  "LoginPath": "/passport/login",
+  "DefaultTheme": "default",
+  "RootMenu": "RH_Root",
+  "MenuTreeVisibility": "All",
+  "DynamicTableButtonLayout": "dropdown",
+  "IsLockScreen": true,
+  "TriggerLockScreenTime": -1,
+  "Version": "9.x",
+  "VersionSetting": false,
+  "IndustrialUrl": "/imics_ver3.0",
+  "EnableThemeSelect": true,
+  "EnableRefresh": false,
+  "EnableLogger": true,
+  "MaterialTreeConfigData": {
+    "rhFirstTab": {
+      "rhTabName": "物料类别",
+      "rhTabField": "MaterialCategory",
+      "rhSettingEntryData": {
+        "rhModuleKey": "MDP",
+        "rhGroupKey": "MaterialManagement",
+        "rhParaCode": "MaterialCategory"
+      }
+    },
+    "rhSecondTab": {
+      "rhTabName": "物料特性",
+      "rhTabField": "MaterialFeature",
+      "rhSettingEntryData": {
+        "rhModuleKey": "MDP",
+        "rhGroupKey": "MaterialManagement",
+        "rhParaCode": "MaterialType"
+      }
+    }
+  }
+}
