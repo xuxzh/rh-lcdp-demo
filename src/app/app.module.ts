@@ -14,10 +14,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { InteractionService } from '@core/init';
 import {
   RhRouteReuseStrategy,
-  RhDefaultInterceptor,
-  RhInterfaceInterceptor,
-  RhFactoryInterceptor,
-  RhThrottleInterceptor
+
 } from 'rh-base/core';
 import { CUSTOMIZE_SELECTOR_DATA, RhCustomizeSelectorDatas } from 'rh-base/model';
 import { RhSharedModule } from 'rh-base/shared';
@@ -70,26 +67,26 @@ const APP_ROUTEREUSE_PROVIDERS: Provider[] = [
 
 /** 拦截器提供商 */
 const INTERCEPTOR_PROVIDERS: Provider[] = [
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: RhThrottleInterceptor,
-    multi: true
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: RhDefaultInterceptor,
-    multi: true
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: RhInterfaceInterceptor,
-    multi: true
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: RhFactoryInterceptor,
-    multi: true
-  }
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: RhThrottleInterceptor,
+  //   multi: true
+  // },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: RhDefaultInterceptor,
+  //   multi: true
+  // },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: RhInterfaceInterceptor,
+  //   multi: true
+  // },
+  // {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: RhFactoryInterceptor,
+  //   multi: true
+  // }
 ];
 
 /** 自定义通用selector提供商 */

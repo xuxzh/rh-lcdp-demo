@@ -12,6 +12,7 @@ import {
   RhUserSessionDto
 } from 'rh-base/model';
 import { RhStorageService, RhAppConfigService, RhApiUrlsService } from 'rh-base/core';
+import { RhComponentSchemaDto } from 'rh-lcdp/model';
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
@@ -84,6 +85,21 @@ export class AppService {
       User: DEFAULT_USER
     };
   }
+
+  /** 获取页面测试数据 */
+  async fetchPageJson(path: string): Promise<RhComponentSchemaDto | null> {
+    try {
+      if (!path) {
+        return null;
+      }
+      path = `assets/data/${path}.json`;
+      const response = await window.fetch(path);
+      return await response.json();
+    } catch {
+      return null;
+    }
+  }
+
   //#region 后端接口区域开始
   /**
    *  查询员工基本信息

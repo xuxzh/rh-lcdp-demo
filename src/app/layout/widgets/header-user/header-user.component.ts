@@ -37,27 +37,21 @@ export class HeaderUserComponent implements OnInit {
     return this.operator.projectConfig;
   }
 
-  constructor(
-    public router: Router,
-    public sotrage: RhStorageService,
-    private operator: AppService,
-    public storage: RhStorageService,
-    private appSer: AppService
-  ) {}
+  constructor(public router: Router, private operator: AppService, public storage: RhStorageService, private appSer: AppService) {}
 
   async ngOnInit() {
     this.user = this.operator.getUser();
     this.rhUserChange.emit(this.user);
-    const userInfo = await this.getUserInfo();
-    const employeeInfo = await this.getEmployeeInfo();
-    this.updateUserSession(userInfo, employeeInfo);
+    // const userInfo = await this.getUserInfo();
+    // const employeeInfo = await this.getEmployeeInfo();
+    // this.updateUserSession(userInfo, employeeInfo);
   }
 
   logout() {
     // 清空localStorage和路由列表
     this.appSer.logout().then((status) => {
       if (status.success) {
-        this.sotrage.cleanLoggedInStorage();
+        this.storage.cleanLoggedInStorage();
         this.router.navigate([this.projectConfig.LoginPath]).then((flag) => {
           if (flag) {
             RhRouteReuseStrategy.resetHandlers();
@@ -110,6 +104,10 @@ export class HeaderUserComponent implements OnInit {
   refreshPage() {
     // window.document.location.reload(false);
     document.execCommand('Refresh');
+  }
+
+  todoPrompt() {
+    MsgHelper.ShowInfoMessage(`此版本不支持该功能！`);
   }
 
   forceRefresh() {

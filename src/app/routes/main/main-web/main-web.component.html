@@ -39,21 +39,6 @@
         <div class="header-item">
           <rh-fullscreen></rh-fullscreen>
         </div>
-        <div *ngIf="projectConfig?.EnableThemeSelect" class="header-item">
-          <rh-theme-button></rh-theme-button>
-        </div>
-        <div *ngIf="projectConfig?.IsLockScreen" class="header-item">
-          <rh-header-lock></rh-header-lock>
-        </div>
-        <div class="header-item">
-          <rh-developer-debug [style.display]="isDebug ? '' : 'none'"></rh-developer-debug>
-        </div>
-        <div class="header-item">
-          <a style="color: white" (click)="switchProdEnv()"><i nz-icon nzType="link"></i></a>
-        </div>
-        <div class="header-item" *ngIf="projectConfig.VersionSetting">
-          <rh-version rhSize="default"></rh-version>
-        </div>
         <!-- 用户信息 -->
         <div class="user">
           <app-header-user [rhCurrentUserFactory]="currentUserFactory" (rhUserChange)="getUserChange($event)"> </app-header-user>

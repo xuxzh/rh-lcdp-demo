@@ -15,7 +15,8 @@ export const DEFAULT_MENU_DATAS: RhMenusDto[] = [
     DisplayName: '测试项目',
     ParentId: '-1',
     Icon: 'setting',
-    Url: '$lcdp:aaa',
+    // 模具报修
+    Url: '',
     LevelLayer: 2,
     SortOrder: 100,
     TargetView: '',
@@ -35,7 +36,8 @@ export const DEFAULT_MENU_DATAS: RhMenusDto[] = [
     DisplayName: '测试菜单一',
     ParentId: 'root_key',
     Icon: 'experiment',
-    Url: '$lcdp:bbb',
+    // 维修处理
+    Url: '$lcdp:cff50a9f-1e5e-47',
     LevelLayer: 2,
     SortOrder: 100,
     TargetView: '',
@@ -55,7 +57,7 @@ export const DEFAULT_MENU_DATAS: RhMenusDto[] = [
     DisplayName: '测试菜单二',
     ParentId: 'root_key',
     Icon: 'experiment',
-    Url: 'LcdpTwo',
+    Url: '$lcdp:97fbd9e8-7377-49',
     LevelLayer: 2,
     SortOrder: 99,
     TargetView: '',
