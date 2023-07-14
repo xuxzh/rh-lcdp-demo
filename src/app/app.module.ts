@@ -12,15 +12,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { InteractionService } from '@core/init';
-import {
-  RhRouteReuseStrategy,
-
-} from 'rh-base/core';
+import { RhRouteReuseStrategy } from 'rh-base/core';
 import { CUSTOMIZE_SELECTOR_DATA, RhCustomizeSelectorDatas } from 'rh-base/model';
 import { RhSharedModule } from 'rh-base/shared';
 import { environment } from '@evn/environment';
 
 import { StartupService } from './core/init/startup.service';
+import { MockInterceptor } from '@core/net/mock.interceptor';
 
 registerLocaleData(zh);
 
@@ -67,6 +65,11 @@ const APP_ROUTEREUSE_PROVIDERS: Provider[] = [
 
 /** 拦截器提供商 */
 const INTERCEPTOR_PROVIDERS: Provider[] = [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: MockInterceptor,
+    multi: true
+  }
   // {
   //   provide: HTTP_INTERCEPTORS,
   //   useClass: RhThrottleInterceptor,

@@ -9,7 +9,8 @@ import {
   UserAccountInfo,
   ExistUserDto,
   OpResult,
-  RhUserSessionDto
+  RhUserSessionDto,
+  RhSafeAny
 } from 'rh-base/model';
 import { RhStorageService, RhAppConfigService, RhApiUrlsService } from 'rh-base/core';
 import { RhComponentSchemaDto } from 'rh-lcdp/model';
@@ -87,7 +88,7 @@ export class AppService {
   }
 
   /** 获取页面测试数据 */
-  async fetchPageJson(path: string): Promise<RhComponentSchemaDto | null> {
+  async fetchPageJson(path: string): Promise<RhSafeAny> {
     try {
       if (!path) {
         return null;

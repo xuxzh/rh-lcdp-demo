@@ -1,0 +1,25 @@
+{
+  "Success": true,
+  "Message": "NestJS-Tip: 分页查询数据成功！",
+  "Record": 1,
+  "Attach": [
+      {
+          "ModuleName": "PMS",
+          "ModuleDisplayName": "易智平台",
+          "ServerIp": "192.168.0.88",
+          "Port": "3003",
+          "GlobalPrefix": "/PMS",
+          "Disabled": null,
+          "Deleted": null,
+          "Remark": null,
+          "LastModifier": null,
+          "LastModificationTime": "2023-06-02T07:25:18.000Z",
+          "Creator": null,
+          "CreationTime": "2023-02-24T06:44:44.000Z",
+          "IdKey": "fdda0212-86c0-45",
+          "Id": 2
+      }
+  ],
+  "TotalCount": 1,
+  "SkipCount": 0
+}

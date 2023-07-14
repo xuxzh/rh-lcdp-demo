@@ -77,7 +77,7 @@ export class RhMainWebComponent implements OnInit, OnDestroy {
   /** 主子菜单模式下的选中的主菜单 */
   selectMainMenu: RhMenusDto | null = null;
 
-  menuMode!: MenuNodeType;
+  menuMode: MenuNodeType = 'Normal';
 
   // menuMapped: Record<string, string> = SystemConstant.MENU_MAPPED;
 
