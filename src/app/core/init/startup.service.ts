@@ -29,65 +29,64 @@ export class StartupService {
    * @description 非生产模式下必须传入配置的`appconfig.json`的路径
    */
   load(production: boolean, jsonUrl?: string): Promise<RhSafeAny> {
-    const serverIp = window.location.hostname;
-    const port = window.location.port;
-    // console.log('hahahah');
+    // const serverIp = window.location.hostname;
+    // const port = window.location.port;
     return new Promise((resolve) => {
       const projectUrl = 'assets/setting/project-config.json';
-      if (production) {
-        const url = `http://${serverIp}:${port}/WebAppConfiguration/WebAppConfig.json`;
-        zip(
-          // this.httpClient.get(`assets/i18n/${this.i18n.defaultLang || 'zh-CN'}.json`),
-          this.httpClient.get(url),
-          this.httpClient.get(projectUrl)
+      // if (production) {
+      //   const url = `http://${serverIp}:${port}/WebAppConfiguration/WebAppConfig.json`;
+      //   zip(
+      //     // this.httpClient.get(`assets/i18n/${this.i18n.defaultLang || 'zh-CN'}.json`),
+      //     this.httpClient.get(url),
+      //     this.httpClient.get(projectUrl)
+      //   )
+      //     .pipe(
+      //       //
+      //       catchError((res) => {
+      //         console.warn(`StartupService.load: Network request failed`, res);
+      //         resolve(null);
+      //         return [];
+      //       })
+      //     )
+      //     .subscribe(([appData, projectData]) => {
+      //       //this.i18nSetting(langData);
+
+      //       // 当启用了使用网站ip作为服务器时，处理ServerIp
+      //       appData = this.serverIpHanlder(appData as RhAppConfigDto);
+      //       this.appconfigSer.setAppConfigBackup(appData as RhAppConfigDto);
+      //       appData = this.setDevelopMode(appData as RhAppConfigDto);
+      //       this.appconfigSer.setAppConfig(appData as RhAppConfigDto);
+
+      //       this.appconfigSer.setProjectConfig(projectData as RhProjectConfigDto);
+      //       resolve(true);
+      //     });
+      // } else {
+      const url = jsonUrl as string;
+      zip(
+        // this.httpClient.get(`assets/i18n/${this.i18n.defaultLang || 'zh-CN'}.json`),
+        this.httpClient.get(url),
+        this.httpClient.get(projectUrl)
+      )
+        .pipe(
+          //
+          catchError((res) => {
+            console.warn(`StartupService.load: Network request failed`, res);
+            resolve(null);
+            return [];
+          })
         )
-          .pipe(
-            //
-            catchError((res) => {
-              console.warn(`StartupService.load: Network request failed`, res);
-              resolve(null);
-              return [];
-            })
-          )
-          .subscribe(([appData, projectData]) => {
-            //this.i18nSetting(langData);
+        .subscribe(([appData, projectData]) => {
+          // this.i18nSetting(langData);
+          // 当启用了使用网站ip作为服务器时，处理ServerIp
+          appData = this.serverIpHanlder(appData as RhAppConfigDto);
+          this.appconfigSer.setAppConfigBackup(appData as RhAppConfigDto);
+          appData = this.setDevelopMode(appData as RhAppConfigDto);
+          this.appconfigSer.setAppConfig(appData as RhAppConfigDto);
 
-            // 当启用了使用网站ip作为服务器时，处理ServerIp
-            appData = this.serverIpHanlder(appData as RhAppConfigDto);
-            this.appconfigSer.setAppConfigBackup(appData as RhAppConfigDto);
-            appData = this.setDevelopMode(appData as RhAppConfigDto);
-            this.appconfigSer.setAppConfig(appData as RhAppConfigDto);
-
-            this.appconfigSer.setProjectConfig(projectData as RhProjectConfigDto);
-            resolve(true);
-          });
-      } else {
-        const url = jsonUrl as string;
-        zip(
-          // this.httpClient.get(`assets/i18n/${this.i18n.defaultLang || 'zh-CN'}.json`),
-          this.httpClient.get(url),
-          this.httpClient.get(projectUrl)
-        )
-          .pipe(
-            //
-            catchError((res) => {
-              console.warn(`StartupService.load: Network request failed`, res);
-              resolve(null);
-              return [];
-            })
-          )
-          .subscribe(([appData, projectData]) => {
-            // this.i18nSetting(langData);
-            // 当启用了使用网站ip作为服务器时，处理ServerIp
-            appData = this.serverIpHanlder(appData as RhAppConfigDto);
-            this.appconfigSer.setAppConfigBackup(appData as RhAppConfigDto);
-            appData = this.setDevelopMode(appData as RhAppConfigDto);
-            this.appconfigSer.setAppConfig(appData as RhAppConfigDto);
-
-            this.appconfigSer.setProjectConfig(projectData as RhProjectConfigDto);
-            resolve(true);
-          });
-      }
+          this.appconfigSer.setProjectConfig(projectData as RhProjectConfigDto);
+          resolve(true);
+        });
+      // }
     });
   }
 

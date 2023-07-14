@@ -13,7 +13,6 @@ import {
   RhSafeAny
 } from 'rh-base/model';
 import { RhStorageService, RhAppConfigService, RhApiUrlsService } from 'rh-base/core';
-import { RhComponentSchemaDto } from 'rh-lcdp/model';
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';

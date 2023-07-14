@@ -85,7 +85,7 @@ export class RhMainWebComponent implements OnInit, OnDestroy {
 
   menuMapped!: Record<string, string>;
 
-  theme = this.appSer.projectConfig.DefaultTheme;
+  theme = this.appSer.projectConfig.DefaultTheme || 'default';
 
   menuLoading = false;
 
