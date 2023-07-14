@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": ["file-saver","lodash","ng2-pdf-viewer"],
-            "outputPath": "dist/rh-lcdp-demo",
+            "outputPath": "dist/lcdp-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
