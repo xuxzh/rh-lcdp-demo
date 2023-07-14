@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RhApiUrlsService } from 'rh-base/core';
+import { error, MsgHelper, RhApiUrlsService } from 'rh-base/core';
 import { RhStorageService } from 'rh-lcdp/core';
 import { DataResultT, RhMenuFeaturesDto, RhMenuFeaturesQueryDto, RhSafeAny, RhComponentSchemaDto } from 'rh-lcdp/model';
 import { Observable, firstValueFrom } from 'rxjs';
@@ -15,6 +15,7 @@ type RhInstanceAuthorityRegistration = RhSafeAny;
 })
 export class LcdpRenderComponent implements OnInit {
   pageConfigDto!: RhComponentSchemaDto;
+  pageLoading = false;
 
   instanceAuthorities: RhInstanceAuthorityRegistration[] = [];
 
@@ -29,36 +30,23 @@ export class LcdpRenderComponent implements OnInit {
   }
 
   async init(pageKey: string) {
-    // const data = this.storageSer.getAuthorityData();
-    // if (data?.menuDto.IsUseFeaturePermission) {
-    //   const result = await firstValueFrom(
-    //     this.GetMenuFeaturesDatas({
-    //       MenuName: data.menuDto.name,
-    //       FeatureName: '',
-    //       MaxResultCount: 10,
-    //       SkipCount: 0,
-    //       Mode: 8
-    //     })
-    //   );
-    //   if (!result.Success) throw result.Message;
-    //   const items = result.Attach;
-    //   const visibleItems = new Set(data.menuFeatureAuthorityDatas);
-    //   this.instanceAuthorities = items
-    //     .filter((item) => !visibleItems.has(item.FeatureName))
-    //     .map((item) => {
-    //       return {
-    //         instanceKey: item.FeatureName,
-    //         authority: {
-    //           visible: false
-    //         }
-    //       };
-    //     });
-    //   //console.log(this.instanceAuthorities);
-    // }
-    const pageConfigDto = await this.appSer.fetchPageJson(pageKey);
-    if (pageConfigDto) {
-      this.pageConfigDto = pageConfigDto;
-    }
+    MsgHelper.ShowGlobalLoadingMessage(`正在加载页面数据，请稍后。。。`, 0);
+    this.pageLoading = true;
+    this.appSer
+      .fetchPageJson(pageKey)
+      .then((data) => {
+        const pageConfigDto = data;
+        if (pageConfigDto) {
+          this.pageConfigDto = pageConfigDto;
+        }
+      })
+      .catch((err) => {
+        MsgHelper.ShowWarningMessage(`加载页面数据发生错误：${err}`);
+      })
+      .finally(() => {
+        MsgHelper.CloseGlobalLoadingMessage();
+        this.pageLoading = false;
+      });
   }
 
   // /**

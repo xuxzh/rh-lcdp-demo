@@ -1,3 +1,5 @@
 <div class="rh-full">
-  <rh-inline-renderer [rhConfig]="pageConfigDto" [rhInstanceAuthorities]="instanceAuthorities"></rh-inline-renderer>
+  <nz-spin nzTip="页面加载中..." [nzSpinning]="pageLoading">
+    <rh-inline-renderer [rhConfig]="pageConfigDto" [rhInstanceAuthorities]="instanceAuthorities"></rh-inline-renderer>
+  </nz-spin>
 </div>
